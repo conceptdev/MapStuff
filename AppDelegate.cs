@@ -33,6 +33,7 @@ namespace MapStuff
 
 		MapStuff.MapLineSharp.MapLinesViewController viewController1;
 		MapStuff.DrawMap.DrawGeometryMapViewController viewController2;
+		MapStuff.os4Maps.os4MapsViewController viewController3;
 
 		// This method is invoked when the application has loaded its UI and its ready to run
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
@@ -43,13 +44,22 @@ namespace MapStuff
 
 			viewController1 = new MapStuff.MapLineSharp.MapLinesViewController();
 			viewController2 = new MapStuff.DrawMap.DrawGeometryMapViewController();
+			
 
-			viewController1.TabBarItem = new UITabBarItem ("Show", UIImage.FromFile("MapLineSharp/103-map.png"), 0);
-			viewController2.TabBarItem = new UITabBarItem ("Draw", UIImage.FromFile("DrawMap/72-pin.png"), 0);
-			// TODO: add iOS4 examples with MKOverlay
+			viewController1.TabBarItem = new UITabBarItem ("Show (OS3)", UIImage.FromFile("MapLineSharp/103-map.png"), 0);
+			viewController2.TabBarItem = new UITabBarItem ("Draw (OS3)", UIImage.FromFile("DrawMap/72-pin.png"), 0);
 
-			tabBarController.ViewControllers = new UIViewController[] {viewController1, viewController2};
-
+			var v = new Version(UIDevice.CurrentDevice.SystemVersion);
+			if (v.Major >= 4)
+			{	// create & use the iOS4 stuff
+				viewController3 = new MapStuff.os4Maps.os4MapsViewController();		
+				viewController3.TabBarItem = new UITabBarItem ("Show (OS4)", UIImage.FromFile("os4Maps/tabmap.png"), 0);
+				tabBarController.ViewControllers = new UIViewController[] {viewController1, viewController2, viewController3};
+			}
+			else
+			{	// otherwise just iOS3
+				tabBarController.ViewControllers = new UIViewController[] {viewController1, viewController2};
+			}
 			window.AddSubview (tabBarController.View);
 			window.MakeKeyAndVisible ();
 			return true;

@@ -91,7 +91,7 @@ namespace MapStuff.DrawMap
 						CLLocation location = myAnnotation.Points[idx];
 						PointF point = MainView.MapView.ConvertCoordinate(location.Coordinate, this);
 
-						Debug.WriteLine("Point: {0}, {1}", point.X, point.Y);
+						//Debug.WriteLine("Point: {0}, {1}", point.X, point.Y);
 
 						if (idx == 0)
 						{
